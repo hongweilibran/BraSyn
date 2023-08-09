@@ -6,7 +6,7 @@ import SimpleITK as sitk
 import shutil
 
 val_folder = '/hdd3/bran/data/pseudo_val_set/BraTS-GLI-00001-000' # only one folder is tested for your container! 
-output_folder = '/hdd3/bran/data/output'  #
+output_folder = '/hdd3/bran/data/output/BraTS-GLI-00001-00'  #
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
