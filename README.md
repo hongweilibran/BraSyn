@@ -23,4 +23,6 @@ Please note that your container will only taking on one folder as the input. You
 In this case, t2w (T2-weighted) is missing   
 
 ### How to detect which modality is missing? 
-When presenting three image files in each test folder, if you wish to automatically which is missing, we provide a script to do it. Please check _detect_missing_modality.py_. Please note that after synthesizing the missing one, you will need to copy the other three files to the output folder. Please check the end of the Python script. 
+When presenting three image files in each test folder, if you wish to automatically which is missing, we provide a script to do it. Please check _detect_missing_modality.py_. 
+
+Please note that after synthesizing the missing one, you will need to **copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation afterwards.
