@@ -9,7 +9,7 @@ However, one modality will be randomly dropped during the test stage.
 
 We provide a python script named _dropout_modality.py_ to show how it works on the validation set. 
 
-Please note that your container will only taking on one folder as the input. You will expect the format like this: 
+Please note that your container will only take on one folder as the input. You will expect the format like this: 
  
 
        BraTS-GLI-99999-000
