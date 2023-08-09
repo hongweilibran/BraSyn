@@ -5,7 +5,7 @@ import numpy as np
 import SimpleITK as sitk 
 
 # Define evaluation Metrics
-ssim = StructuralSimilarityIndexMeasure(return_full_image=True)
+ssim = StructuralSimilarityIndexMeasure()
 
 def __percentile_clip(input_tensor, reference_tensor=None, p_min=0.5, p_max=99.5, strictlyPositive=True):
     """Normalizes a tensor based on percentiles. Clips values below and above the percentile.
@@ -34,7 +34,6 @@ def __percentile_clip(input_tensor, reference_tensor=None, p_min=0.5, p_max=99.5
     return output_tensor
 
             
-
 def compute_metrics(gt_image: torch.Tensor, prediction: torch.Tensor, mask: torch.Tensor, normalize=True):
     """Computes MSE, PSNR and SSIM between two images only in the masked region.
 
@@ -64,7 +63,7 @@ def compute_metrics(gt_image: torch.Tensor, prediction: torch.Tensor, mask: torc
     if normalize:
         gt_image = __percentile_clip(gt_image, p_min=0.5, p_max=99.5, strictlyPositive=True)
         prediction = __percentile_clip(prediction, p_min=0.5, p_max=99.5, strictlyPositive=True)
-
+    prediction = prediction*2
     mask[mask>0] = 1
     mask = mask.type(torch.int64)
     # Get Infill region (we really are only interested in the infill region)
@@ -76,21 +75,15 @@ def compute_metrics(gt_image: torch.Tensor, prediction: torch.Tensor, mask: torc
 
  
     # SSIM - apply on complete masked image but only take values from masked region
-    ssim_idx_full_image = ssim(preds=prediction_tumor, target=gt_image_tumor)
-    ssim_idx = ssim_idx_full_image[mask]
-    SSIM_tumor = ssim_idx.mean()
-
-    ssim_idx_full_image = ssim(preds=prediction_non_tumor, target=gt_image_non_tumor)
-    ssim_idx = ssim_idx_full_image[1 - mask]
-    SSIM_non_tumor = ssim_idx.mean()
+    SSIM_tumor = ssim(preds=prediction_tumor, target=gt_image_tumor)
+    SSIM_non_tumor = ssim(preds=prediction_non_tumor, target=gt_image_non_tumor)
 
     return float(SSIM_tumor), float(SSIM_non_tumor)
 
 
-
-
 real_path = 'data/reference/BraTS-GLI-00000-000/BraTS-GLI-00000-000-t1n.nii.gz'
 syn_path = 'data/output/BraTS-GLI-00000-000/BraTS-GLI-00000-000-t1n.nii.gz'
+# syn_path = '/hdd3/bran/data/result_his.nii.gz'
 seg_path = 'data/reference/BraTS-GLI-00000-000/BraTS-GLI-00000-000-seg.nii.gz'
 
 array_real = sitk.GetArrayFromImage(sitk.ReadImage(real_path))
@@ -101,16 +94,12 @@ array_real = array_real[np.newaxis, np.newaxis, ...]
 array_syn = array_syn[np.newaxis, np.newaxis, ...]
 array_seg = array_seg[np.newaxis, np.newaxis, ...]
 
-print(np.shape(array_real))
-
-array_real = torch.tensor(array_real)
-array_syn = torch.tensor(array_syn)
-array_seg = torch.tensor(array_seg)
+array_real = torch.from_numpy(array_real)
+array_syn = torch.from_numpy(array_syn)
+array_seg = torch.from_numpy(array_seg)
 
 
-SSIM_tumor, SSIM_non_tumor = compute_metrics(array_real, array_syn,array_seg, normalize=True)
+SSIM_tumor, SSIM_non_tumor = compute_metrics(array_real, array_syn, array_seg, normalize=True)
 
 print(SSIM_tumor)
 print(SSIM_non_tumor)
-
-
