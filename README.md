@@ -9,7 +9,7 @@ However, one modality will be randomly dropped during the test stage.
 
 We provide a python script named _dropout_modality.py_ to show how it works on the validation set. 
 
-Please note that your container will only take on one folder as the input. You will expect the format like this: 
+Please note that your container will only take on one folder as the input and be iterated on the whole test set. You will expect the format like this: 
  
 
        BraTS-GLI-99999-000
@@ -25,7 +25,7 @@ In this case, t2w (T2-weighted) is missing
 ### How to detect which modality is missing? 
 When presenting three image files in each test folder, if you wish to automatically figure out which one is missing, we provide a script to do it. Please check _detect_missing_modality.py_. 
 
-Please note that after synthesizing the missing one, you will need to **copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterwards.
+Please note that after synthesizing the missing one, you will need to **copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterward.
 
 ### 
 
