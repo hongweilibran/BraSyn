@@ -25,7 +25,10 @@ In this case, t2w (T2-weighted) is missing
 ### Detecting missing modality during inference 
 When presenting three image files in each test folder, if you wish to automatically figure out which one is missing, we provide a script to do it. Please check _detect_missing_modality.py_. 
 
-Please note that after synthesizing the missing one, you **DO NOT need to copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterward.
+Please note that after synthesizing the missing one, you **DO NOT need to copy** the other three files to the output folder. Please check the end of the Python script. Afterward, we will do automated segmentation based on the four modalities (three real images + one fake image).
+
+**DO NOT add any suffixes, such as '-synthetic.nii.gz' to the output.** 
+
 
 ### Performing segmentation using the synthetic image as a part of the input
 After generating the missing image, segmentation can be performed by taking three real modalities + the missing modality as the input. 
