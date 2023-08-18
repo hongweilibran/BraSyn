@@ -28,7 +28,7 @@ When presenting three image files in each test folder, if you wish to automatica
 Please note that after synthesizing the missing one, you **DO NOT need to copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterward.
 
 ### Performing segmentation using the synthetic image as a part of the input
-We use the **FeTS Consensus Models** for image segmentation, the command is:  
+We use the **[FeTS Consensus Models](https://github.com/FeTS-AI/Front-End/releases/tag/1.0.1 )** for image segmentation, the command is:  
 
 ```ruby
 ${fets_root_dir}/bin/FeTS_CLI_Segment -d /path/to/output/DataForFeTS \ # data directory after invoking ${fets_root_dir}/bin/PrepareDataset
