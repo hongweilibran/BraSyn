@@ -25,9 +25,19 @@ In this case, t2w (T2-weighted) is missing
 ### Detecting missing modality during inference 
 When presenting three image files in each test folder, if you wish to automatically figure out which one is missing, we provide a script to do it. Please check _detect_missing_modality.py_. 
 
-Please note that after synthesizing the missing one, you will need to **copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterward.
+Please note that after synthesizing the missing one, you **DO NOT need to copy** the other three files to the output folder. Please check the end of the Python script. This is because we will do automated segmentation based on the four modalities afterward.
 
-### 
+### Performing segmentation using the synthetic image as a part of the input
+We use the **FeTS Consensus Models** for image segmentation, the command is:  
 
+```ruby
+${fets_root_dir}/bin/FeTS_CLI_Segment -d /path/to/output/DataForFeTS \ # data directory after invoking ${fets_root_dir}/bin/PrepareDataset
 
+  -a fets_singlet,fets_triplet \ # can be used with all pre-trained models currently available in FeTS
 
+  -lF STAPLE,ITKVoting,SIMPLE,MajorityVoting \ # if a single architecture is used, this parameter is ignored
+
+  -g 1 \ # '0': cpu, '1': request gpu
+
+  -t 0 # '0': inference mode, '1': training mode
+```
