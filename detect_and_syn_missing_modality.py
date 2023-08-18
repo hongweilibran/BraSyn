@@ -40,11 +40,9 @@ in_path_3 = os.path.join(val_folder, file_list[2])
 out_path = os.path.join(output_folder, file_list[2][:-10]+miss_one+file_list[2][-7:])
 syntheize_missing_modality(in_path_1, in_path_2, in_path_3, out_path)
 
-## now we have generated a fake 3d mri scan 
-## please copy the other three files to the output foler!!!!! 
-shutil.copyfile(in_path_1, os.path.join(output_folder, file_list[0]))
-shutil.copyfile(in_path_2, os.path.join(output_folder, file_list[1]))
-shutil.copyfile(in_path_3, os.path.join(output_folder, file_list[2]))
+## now we have generated a fake 3d MRI scan, this is the final output of your model. The naming formate should be the same as training/validation set.
+## DO NOT add any suffixes, such as '-synthetic.nii.gz' to the output. 
+
 
 
 
