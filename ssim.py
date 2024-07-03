@@ -63,7 +63,6 @@ def compute_metrics(gt_image: torch.Tensor, prediction: torch.Tensor, mask: torc
     if normalize:
         gt_image = __percentile_clip(gt_image, p_min=0.5, p_max=99.5, strictlyPositive=True)
         prediction = __percentile_clip(prediction, p_min=0.5, p_max=99.5, strictlyPositive=True)
-    prediction = prediction*2
     mask[mask>0] = 1
     mask = mask.type(torch.int64)
     # Get Infill region (we really are only interested in the infill region)
